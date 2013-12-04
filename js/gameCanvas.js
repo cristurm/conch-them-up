@@ -13,8 +13,9 @@ var GameCanvas = function () {
 			this.context.fillRect(_posX, _posY, _width, _height);
 		},
 		
+		// Clear the Canvas
 		clear: function () {
-			this.context.clearRect(0, 0, this.width, this.height); //clear the canvas
+			this.context.clearRect(0, 0, this.width, this.height);
 		}
 	}
 }

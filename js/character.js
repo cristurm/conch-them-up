@@ -9,9 +9,9 @@ var Character = function () {
 			
 			this.charWidth = this.size;
 			this.charHeight = this.size * 2;
-			this.skill = [];
+			this.bullets = [];
 			this.lastSkill;
-			this.skillBool = true;
+			this.bulletsBool = true;
 		},
 		
 		move: function () {
@@ -49,34 +49,38 @@ var Character = function () {
 			var newSkill = new Skill();
 			newSkill.init(_skillType, _skillX, _skillY);
 			
-			this.skillBool = false;
-			this.skill.push(newSkill);
-			this.lastSkill = this.skill[this.skill.length - 1];
+			this.bulletsBool = false;
+			this.bullets.push(newSkill);
+			this.lastSkill = this.bullets[this.bullets.length - 1];
 		},
 		
 		update: function () {
 			this.move();
 			
 			// Shoot!
-			if (KB.isKeyDown("space") && this.skillBool) {
-				this.shoot("thunder", this.posX, this.posY);
+			if (KB.isKeyDown("space") && this.bulletsBool) {
+				var skillPosY = this.posY + this.charHeight * 0.5,
+					skillPosX = this.posX + this.charWidth * 0.5;
+					
+				this.shoot("thunder", skillPosX, skillPosY);
 			}
 			
+			// Update Bullets
 			var index = 0;
-			for (index = 0; index < this.skill.length; ++index) {
-				if(this.skill[index]) {
-					this.skill[index].update();
+			for (index = 0; index < this.bullets.length; ++index) {
+				if(this.bullets[index]) {
+					this.bullets[index].update();
 					
-					if (this.skill[index].posX > GC.width){
-						this.skill.splice(index, 1);
+					if (this.bullets[index].posX > GC.width){
+						this.bullets.splice(index, 1);
 					}
 				}
 			}		
 			
-			// Bullet Delay			
+			// Bullet Delay	
 			if (this.lastSkill) { 
 				if (this.lastSkill.posX > this.lastSkill.initPos + 100){
-					this.skillBool = true;
+					this.bulletsBool = true;
 				}
 			}
 		},
@@ -84,11 +88,11 @@ var Character = function () {
 		draw: function () {
 			GC.drawRectangle(this.color, this.posX, this.posY, this.charWidth, this.charHeight);
 			
-			// Draw Skills
+			// Draw Bullets
 			var index = 0;
-			for (index = 0; index < this.skill.length; ++index) {
-				if(this.skill[index]) {
-					this.skill[index].draw();
+			for (index = 0; index < this.bullets.length; ++index) {
+				if(this.bullets[index]) {
+					this.bullets[index].draw();
 				}
 			}
 		}
