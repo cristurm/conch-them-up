@@ -1,0 +1,26 @@
+body {
+	margin: 0;
+	padding: 30px 0 0 0;
+	background: #eee;
+}
+
+#conch-them-up {
+	float: right;
+	width: 800px;
+	height: 600px;
+	background: #ccc;
+	margin-right: 30px;
+}
+
+#debugger {
+	background: #333;
+	color: #ccc;
+	padding: 10px;
+	overflow: scroll;
+	font-family: monospace;
+	position: absolute;
+	width: 350px;
+	height: 85%;
+	left: 30px;
+	top: 30px;
+}
