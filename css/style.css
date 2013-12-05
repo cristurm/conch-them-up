@@ -24,3 +24,16 @@ body {
 	left: 30px;
 	top: 30px;
 }
+
+#clear {
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0;
+	padding: 5px 10px;
+	border: none;
+	cursor: pointer;
+	background: #ccc;
+}
