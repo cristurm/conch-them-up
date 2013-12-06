@@ -30,7 +30,13 @@ var Enemy = function () {
 		},
 		
 		die: function () {
-			DEBUG.log('enemy down!');
+			var index = GL.enemies.indexOf(this);
+			
+			if (index >= 0) {
+				GL.enemies.splice(index, 1);
+			}
+			
+			DEBUG.log('enemy down! ' + index);
 		},
 		
 		update: function () {
@@ -41,8 +47,8 @@ var Enemy = function () {
 				if(GL.skills[this.auxIndex]) {
 					var skill = GL.skills[this.auxIndex];
 					
-					if ((skill.posX > this.posX && skill.posX < (this.posX + this.size)) &&
-						(skill.posY > this.posY && skill.posY < (this.posY + this.size))) {
+					if (((skill.posX + skill.size) > this.posX && skill.posX < (this.posX + this.size)) &&
+						((skill.posY + skill.size) > this.posY && skill.posY < (this.posY + this.size))) {
 						
 						this.die();
 					}

@@ -2,6 +2,9 @@ var Debugger = function () {
 	return {
 		init: function () {
 			this.debugArea = document.getElementById("debugger");
+			this.clearButton = document.getElementById("clear");
+			
+			this.bindEvents();
 		},
 	
 		log: function (_string) {
@@ -11,6 +14,14 @@ var Debugger = function () {
 			} else {
 				this.debugArea.innerHTML = "<p>" + _string + "</p>";
 			}			
+		},
+		
+		bindEvents: function () {
+			var myself = this;
+			
+			this.clearButton.addEventListener('click', function() {
+				myself.debugArea.innerHTML = "";
+			});
 		}
 	}
 }

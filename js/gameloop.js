@@ -52,7 +52,7 @@ var GameLoop = function () {
 				this.pastTime = this.date.getTime();
 				this.timerFlag = false;
 			} else {
-				if (this.summonDifference > 3000) {
+				if (this.summonDifference > 1000) {
 					this.summonEnemy();
 					
 					this.timerFlag = true;

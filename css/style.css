@@ -27,8 +27,8 @@ body {
 
 #clear {
 	position: absolute;
-	left: 0;
-	top: 0;
+	left: 30px;
+	top: 30px;
 	font-size: 12px;
 	font-weight: bold;
 	margin: 0;
