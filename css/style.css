@@ -4,12 +4,30 @@ body {
 	background: #eee;
 }
 
-#conch-them-up {
-	float: right;
+#game-area {
+	position: relative;
 	width: 800px;
 	height: 600px;
-	background: #ccc;
+	float: right;
 	margin-right: 30px;
+}
+
+#conch-them-up {
+	background: #ccc;
+}
+
+#score {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-family: Arial, sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#score:before {
+	content: 'Score: ';	
 }
 
 #debugger {

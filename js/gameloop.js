@@ -10,6 +10,7 @@ var GameLoop = function () {
 			this.pastTime = this.date.getTime();
 			this.timerFlag = true;
 			this.summonDifference = 0;
+			this.score = 0;
 		
 			// game elements
 			this.enemies = [];
@@ -18,6 +19,12 @@ var GameLoop = function () {
 			this.mainChar.init();
 			
 			this.theLoop();
+			GC.updateScore(this.score);
+		},
+		
+		scoreUp: function (_plusScore) {
+			this.score += _plusScore;
+			GC.updateScore(this.score);
 		},
 		
 		summonEnemy: function () {
@@ -77,11 +84,11 @@ var GameLoop = function () {
 			this.auxIndex = 0;
 			for (this.auxIndex = 0; this.auxIndex < this.skills.length; this.auxIndex += 1) {
 				if(this.skills[this.auxIndex]) {
-					var bullet = this.skills[this.auxIndex];
+					var skill = this.skills[this.auxIndex];
 				
-					bullet.update();
+					skill.update();
 					
-					if (bullet.posX > GC.width){
+					if (skill.posX > GC.width){
 						this.skills.splice(this.auxIndex, 1);
 					}
 				}

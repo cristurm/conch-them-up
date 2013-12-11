@@ -4,25 +4,31 @@ var Enemy = function () {
 			this.type = _type;
 			this.bullets = GL.bullets;
 			this.auxIndex = 0;
+			this.healthBarColor = "#32CD32";
 			
 			switch (_type) {
 				case "big" :
 					this.size = 50;
 					this.color = "#8B0000";
 					this.speed = 1;
-					this.posX = 800;
-					this.posY = _posY > (GC.height - this.size) ? GC.height - this.size : _posY;
-					
+					this.health = 5;
+					this.points = 500;
 					break;
 				case "small" :
 					this.size = 25;
 					this.color = "#CD5C5C";
 					this.speed = 3;
-					this.posX = 800;
-					this.posY = _posY > (GC.height - this.size) ? GC.height - this.size : _posY;
-					
+					this.health = 1;	
+					this.points = 100;
 					break;
 			}
+			
+			this.posX = 800;			
+			this.posY = _posY < 10 ? 10 : _posY; // Add 10px spacing from the top if needed
+			this.posY = _posY > (GC.height - this.size - 10) ? GC.height - this.size - 10 : this.posY; // Fix and add 10px spacing from the bottom if needed
+			this.initialHealth = this.health;
+			this.healthBarWidth = this.size;
+			this.base = (this.posY + this.size) + 2;
 		},
 		
 		move: function () {
@@ -30,13 +36,18 @@ var Enemy = function () {
 		},
 		
 		die: function () {
-			var index = GL.enemies.indexOf(this);
-			
-			if (index >= 0) {
-				GL.enemies.splice(index, 1);
+			this.health -= 1;			
+		
+			if (this.health <= 0) {
+				var index = GL.enemies.indexOf(this);
+				
+				if (index >= 0) {
+					GL.scoreUp(this.points);
+					GL.enemies.splice(index, 1);
+				}
 			}
 			
-			DEBUG.log('enemy down! ' + index);
+			this.healthBarWidth = (this.size / this.initialHealth) * this.health;
 		},
 		
 		update: function () {
@@ -51,6 +62,9 @@ var Enemy = function () {
 						((skill.posY + skill.size) > this.posY && skill.posY < (this.posY + this.size))) {
 						
 						this.die();
+						
+						var index = GL.skills.indexOf(skill);						
+						GL.skills.splice(index, 1);
 					}
 				}
 			}
@@ -58,6 +72,7 @@ var Enemy = function () {
 		
 		draw: function () {
 			GC.drawRectangle(this.color, this.posX, this.posY, this.size, this.size);
+			GC.drawRectangle(this.healthBarColor, this.posX, this.base, this.healthBarWidth, 2);
 		}
 	}
 }

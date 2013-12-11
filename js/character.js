@@ -10,6 +10,10 @@ var Character = function () {
 			this.charHeight = this.size * 2;
 			this.lastSkill;
 			this.skillsBool = true;
+			this.currentTime = GL.date.getTime();
+			this.pastTime = GL.date.getTime();
+			this.shootDifference = 0;
+			this.skillDelay = 150;
 		},
 		
 		move: function () {
@@ -44,10 +48,11 @@ var Character = function () {
 		},
 		
 		shoot: function (_skillType, _skillX, _skillY) {
+			this.skillsBool = false;
+			this.pastTime = GL.date.getTime();
+		
 			var newSkill = new Skill();
 			newSkill.init(_skillType, _skillX, _skillY);
-			
-			this.skillsBool = false;
 			GL.skills.push(newSkill);
 			this.lastSkill = GL.skills[GL.skills.length - 1];
 		},
@@ -59,15 +64,16 @@ var Character = function () {
 			if (KB.isKeyDown("space") && this.skillsBool) {
 				var skillPosY = this.posY + this.charHeight * 0.5,
 					skillPosX = this.posX + this.charWidth * 0.5;
-					
+				
 				this.shoot("thunder", skillPosX, skillPosY);
 			}
 			
 			// Bullet Delay	
-			if (this.lastSkill) { 
-				if (this.lastSkill.posX > this.lastSkill.initPos + 100){
-					this.skillsBool = true;
-				}
+			this.currentTime = GL.date.getTime();			
+			this.shootDifference = this.currentTime - this.pastTime;
+			
+			if (this.shootDifference > this.skillDelay) { 
+				this.skillsBool = true;
 			}
 		},
 		

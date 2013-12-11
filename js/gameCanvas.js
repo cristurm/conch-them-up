@@ -3,8 +3,13 @@ var GameCanvas = function () {
 		init: function () {
 			this.width = 800;
 			this.height = 600;
-			this.elem = document.getElementById("conch-them-up");
-			this.context = this.elem.getContext("2d");
+			this.canvas = document.getElementById("conch-them-up");
+			this.score = document.getElementById("score");
+			this.context = this.canvas.getContext("2d");
+		},
+		
+		updateScore: function (_newScore) {
+			this.score.innerHTML = _newScore;
 		},
 		
 		drawRectangle: function (_color, _posX, _posY, _width, _height) {
