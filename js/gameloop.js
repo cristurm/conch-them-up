@@ -3,6 +3,8 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 var GameLoop = function () {
 	return {
 		init: function () {
+			var myself = this;
+		
 			this.counter = 0;
 			this.auxIndex = 0;
 			this.date = new Date();
@@ -18,11 +20,20 @@ var GameLoop = function () {
 			this.mainChar = new Character();
 			this.mainChar.init();
 			
-			this.theLoop();
+			// scene sprites
+			this.bgPattern = '';
+			this.bg = new Image();
+			this.bg.src = 'img/grass_pattern.jpg';
+			this.bg.onload = function(){
+				myself.bgPattern = GC.generatePattern(myself.bg, 'repeat');
+				myself.theLoop();
+			};
+			
 			GC.updateScore(this.score);
 		},
 		
 		scoreUp: function (_plusScore) {
+			// Get this shit working.
 			this.score += _plusScore;
 			GC.updateScore(this.score);
 		},
@@ -97,6 +108,8 @@ var GameLoop = function () {
 		
 		draw: function () {
 			GC.clear();
+			
+			GC.drawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
 			
 			this.mainChar.draw();
 			

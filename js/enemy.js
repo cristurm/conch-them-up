@@ -9,14 +9,14 @@ var Enemy = function () {
 			switch (_type) {
 				case "big" :
 					this.size = 50;
-					this.color = "#8B0000";
+					this.color = "#cd1b62";
 					this.speed = 1;
 					this.health = 5;
 					this.points = 500;
 					break;
 				case "small" :
 					this.size = 25;
-					this.color = "#CD5C5C";
+					this.color = "#9e2100";
 					this.speed = 3;
 					this.health = 1;	
 					this.points = 100;
