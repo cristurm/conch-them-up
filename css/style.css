@@ -12,8 +12,18 @@ body {
 	margin-right: 30px;
 }
 
+#game-area canvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
 #conch-them-up {
-	background: #ccc;
+	z-index: 1;
+}
+
+#ui {
+	z-index: 2;
 }
 
 #debugger {

@@ -15,7 +15,7 @@ var Skill = function () {
 		},
 		
 		draw: function () {
-			GC.drawRectangle("#fff", this.posX, this.posY, this.size, this.size);
+			GC.gameDrawRectangle("#fff", this.posX, this.posY, this.size, this.size);
 		}
 	}
 }

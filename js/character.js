@@ -5,7 +5,8 @@ var Character = function () {
 			this.posY = GC.height * 0.5;
 			this.size = 20;
 			this.color = "#fae715";
-			this.speed = 5;			
+			this.speed = 5;
+			this.health = 10;
 			this.charWidth = this.size;
 			this.charHeight = this.size * 2;
 			this.lastSkill;
@@ -78,7 +79,7 @@ var Character = function () {
 		},
 		
 		draw: function () {
-			GC.drawRectangle(this.color, this.posX, this.posY, this.charWidth, this.charHeight);
+			GC.gameDrawRectangle(this.color, this.posX, this.posY, this.charWidth, this.charHeight);
 		}
 	}
 }

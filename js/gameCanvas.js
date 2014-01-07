@@ -3,39 +3,42 @@ var GameCanvas = function () {
 		init: function () {
 			this.width = 800;
 			this.height = 600;
-			this.canvas = document.getElementById("conch-them-up");
-			this.context = this.canvas.getContext("2d");
+			this.gameCanvas  = document.getElementById("conch-them-up");
+			this.uiCanvas    = document.getElementById("ui");
+			this.gameContext = this.gameCanvas.getContext("2d");
+			this.uiContext   = this.uiCanvas.getContext("2d");
+		},		
+		
+		gameDrawRectangle: function (_style, _posX, _posY, _width, _height) {
+			this.gameContext.save();
+			this.gameContext.fillStyle = _style;
+			this.gameContext.fillRect(_posX, _posY, _width, _height);
 		},
 		
-		updateScore: function (_newScore) {
-			//this.score.innerHTML = _newScore;
-			
-			this.writeText('14px Arial', 'white', 'blah', 10, 10);
-		},
-		
-		drawRectangle: function (_style, _posX, _posY, _width, _height) {
-			this.context.save();
-			this.context.fillStyle = _style;
-			this.context.fillRect(_posX, _posY, _width, _height);
-		},
-		
-		generatePattern: function (_img, _repeat) {
-			var pattern = this.context.createPattern(_img, _repeat); 
+		gameGeneratePattern: function (_img, _repeat) {
+			var pattern = this.gameContext.createPattern(_img, _repeat); 
 			
 			return pattern;
 		},
 		
-		writeText: function (_font, _style, _text, _posX, _posY) {
-			console.log('writeText', _text);
+		uiUpdateScore: function (_newScore) {
+			var label = "Score: " + _newScore;
 			
-			this.context.font = _font;
-			this.context.fillStyle = _style;
-			this.context.fillText(_text, _posX, _posY);
+			this.uiContext.clearRect(0, 0, this.width, this.height);
+			this.uiWriteText('14px Arial', 'white', label, 10, 20);
+		},
+		
+		uiWriteText: function (_font, _style, _text, _posX, _posY) {
+			console.log('uiWriteText', _text);
+			
+			this.uiContext.font = _font;
+			this.uiContext.fillStyle = _style;
+			this.uiContext.fillText(_text, _posX, _posY);
 		},
 		
 		// Clear the Canvas
 		clear: function () {
-			this.context.clearRect(0, 0, this.width, this.height);
+			this.gameContext.clearRect(0, 0, this.width, this.height);
 		}
 	}
 }

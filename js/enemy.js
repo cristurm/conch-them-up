@@ -71,8 +71,8 @@ var Enemy = function () {
 		},
 		
 		draw: function () {
-			GC.drawRectangle(this.color, this.posX, this.posY, this.size, this.size);
-			GC.drawRectangle(this.healthBarColor, this.posX, this.base, this.healthBarWidth, 2);
+			GC.gameDrawRectangle(this.color, this.posX, this.posY, this.size, this.size);
+			GC.gameDrawRectangle(this.healthBarColor, this.posX, this.base, this.healthBarWidth, 2);
 		}
 	}
 }

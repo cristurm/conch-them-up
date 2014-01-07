@@ -25,17 +25,17 @@ var GameLoop = function () {
 			this.bg = new Image();
 			this.bg.src = 'img/grass_pattern.jpg';
 			this.bg.onload = function(){
-				myself.bgPattern = GC.generatePattern(myself.bg, 'repeat');
+				myself.bgPattern = GC.gameGeneratePattern(myself.bg, 'repeat');
 				myself.theLoop();
 			};
 			
-			GC.updateScore(this.score);
+			GC.uiUpdateScore(this.score);
 		},
 		
 		scoreUp: function (_plusScore) {
 			// Get this shit working.
 			this.score += _plusScore;
-			GC.updateScore(this.score);
+			GC.uiUpdateScore(this.score);
 		},
 		
 		summonEnemy: function () {
@@ -109,7 +109,7 @@ var GameLoop = function () {
 		draw: function () {
 			GC.clear();
 			
-			GC.drawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
+			GC.gameDrawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
 			
 			this.mainChar.draw();
 			
