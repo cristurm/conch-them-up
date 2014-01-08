@@ -4,7 +4,8 @@ var Enemy = function () {
 			this.type = _type;
 			this.bullets = GL.bullets;
 			this.auxIndex = 0;
-			this.healthBarColor = "#32CD32";
+			this.healthBarColor = "#ff0000";
+			this.healthBarBGColor = "#ffffff";
 			
 			switch (_type) {
 				case "big" :
@@ -72,6 +73,7 @@ var Enemy = function () {
 		
 		draw: function () {
 			GC.gameDrawRectangle(this.color, this.posX, this.posY, this.size, this.size);
+			GC.gameDrawRectangle(this.healthBarBGColor, this.posX, this.base, this.size, 2);
 			GC.gameDrawRectangle(this.healthBarColor, this.posX, this.base, this.healthBarWidth, 2);
 		}
 	}

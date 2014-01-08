@@ -6,7 +6,6 @@ var Character = function () {
 			this.size = 20;
 			this.color = "#fae715";
 			this.speed = 5;
-			this.health = 10;
 			this.charWidth = this.size;
 			this.charHeight = this.size * 2;
 			this.lastSkill;

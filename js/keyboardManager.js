@@ -14,6 +14,10 @@ var KeyboardManager = function () {
 				case 32 :
 					key = 'SPACE';
 					break;
+					
+				case 27 : 
+					key = 'ESC'
+					break;
 				
 				default :
 					key = String.fromCharCode(keyCode);

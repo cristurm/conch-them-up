@@ -9,8 +9,9 @@ var GameCanvas = function () {
 			this.uiContext   = this.uiCanvas.getContext("2d");
 		},		
 		
+		// GAME canvas
 		gameDrawRectangle: function (_style, _posX, _posY, _width, _height) {
-			this.gameContext.save();
+			//this.gameContext.save();
 			this.gameContext.fillStyle = _style;
 			this.gameContext.fillRect(_posX, _posY, _width, _height);
 		},
@@ -21,24 +22,32 @@ var GameCanvas = function () {
 			return pattern;
 		},
 		
-		uiUpdateScore: function (_newScore) {
+		// UI canvas
+		uiUpdateScore: function (_newScore) {		
 			var label = "Score: " + _newScore;
 			
-			this.uiContext.clearRect(0, 0, this.width, this.height);
+			this.clear(this.uiContext);
 			this.uiWriteText('14px Arial', 'white', label, 10, 20);
+			this.uiDrawScoreBar(GL.scoreBarColor, GL.scoreBarBGColor, 10, 580, GL.scoreBarWidth, GL.scoreBarBGWidth, 10);
 		},
 		
-		uiWriteText: function (_font, _style, _text, _posX, _posY) {
-			console.log('uiWriteText', _text);
+		uiDrawScoreBar: function (_style, _bgStyle, _posX, _posY, _width, _bgWidth, _height) {
+			this.uiContext.fillStyle = _bgStyle;
+			this.uiContext.fillRect(_posX, _posY, _bgWidth, _height);
 			
+			this.uiContext.fillStyle = _style;
+			this.uiContext.fillRect(_posX, _posY, _width, _height);
+		},
+		
+		uiWriteText: function (_font, _style, _text, _posX, _posY) {			
 			this.uiContext.font = _font;
 			this.uiContext.fillStyle = _style;
 			this.uiContext.fillText(_text, _posX, _posY);
 		},
 		
-		// Clear the Canvas
-		clear: function () {
-			this.gameContext.clearRect(0, 0, this.width, this.height);
+		// Generic
+		clear: function (_context) {
+			_context.clearRect(0, 0, this.width, this.height);
 		}
 	}
 }
