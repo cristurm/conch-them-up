@@ -35,10 +35,12 @@ var KeyboardManager = function () {
 			var myself = this;
 			
 			document.addEventListener('keydown', function(_event) {
+				_event.preventDefault();
 				myself.updatePressedKeys(_event, true);
 			});
 
 			document.addEventListener('keyup', function(_event) {
+				_event.preventDefault();
 				myself.updatePressedKeys(_event, false);
 			});
 

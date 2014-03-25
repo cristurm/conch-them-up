@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,latin-ext);
+
 body {
 	margin: 0;
 	padding: 0;
@@ -5,11 +7,21 @@ body {
 	text-align: center;
 }
 
+h1, h2 {
+	font-family: 'Press Start 2P', cursive;
+}
+
+#instructions {
+	text-align: left;
+	max-width: 800px;
+	margin: 0.5em 0 2em 0;
+	display: inline-block;
+}
+
 #game-area {
 	position: relative;
 	width: 800px;
 	height: 600px;
-	margin-right: 30px;
 	display: inline-block;
 }
 

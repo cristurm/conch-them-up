@@ -6,9 +6,25 @@
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+	<h1>Conch Them Up!</h1>
+
 	<div id="game-area">
 		<canvas id="conch-them-up" width="800" height="600"></canvas>
 		<canvas id="ui" width="800" height="600"></canvas>
+	</div>
+
+	<div id="instructions">
+		<h2>What?</h2>
+		<p>Conch Them Up is like a shmup, but less hard-core. Made with HTML5 Canvas and JavaScript.</p>
+
+		<h2>Instructions:</h2>
+		<ul>
+			<li>W/A/S/D: Move</li>
+			<li>SPACE: Shoot</li>
+			<li>ESC: Pause</li>
+		</ul>
+
+		Survive as many enemy waves as you can to beat the highest score. If a monster reaches your end of the screen, you loose points. If you kill an eenemy, you are earned points. The wave is completed when the progress bar (the green one) is filled. You die when the progress bar is empty (orange).
 	</div>
 	
 	<script type="text/javascript" src="js/gameCanvas.js"></script>
