@@ -11,10 +11,6 @@
 		<canvas id="ui" width="800" height="600"></canvas>
 	</div>
 	
-	<div id="debugger"></div>
-	<button id="clear">X</button>
-	
-	<script type="text/javascript" src="js/debugger.js"></script>
 	<script type="text/javascript" src="js/gameCanvas.js"></script>
 	<script type="text/javascript" src="js/keyboardManager.js"></script>
 	<script type="text/javascript" src="js/character.js"></script>
@@ -23,12 +19,10 @@
 	<script type="text/javascript" src="js/gameloop.js"></script>
 	
 	<script type="text/javascript">
-		var DEBUG = new Debugger();
 		var GC = new GameCanvas();
 		var KB = new KeyboardManager();
 		var GL = new GameLoop();
 		
-		DEBUG.init();
 		GC.init();
 		KB.init();
 		GL.init();
