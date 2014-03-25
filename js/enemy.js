@@ -2,7 +2,6 @@ var Enemy = function () {
 	return {
 		init: function (_type, _posY) {
 			this.type = _type;
-			this.bullets = GL.bullets;
 			this.auxIndex = 0;
 			this.healthBarColor = "#ff0000";
 			this.healthBarBGColor = "#ffffff";
@@ -14,6 +13,7 @@ var Enemy = function () {
 					this.speed = 1;
 					this.health = 5;
 					this.points = 500;
+					this.penalty = 200;
 					break;
 				case "small" :
 					this.size = 25;
@@ -21,6 +21,7 @@ var Enemy = function () {
 					this.speed = 3;
 					this.health = 1;	
 					this.points = 100;
+					this.penalty = 50;
 					break;
 			}
 			
@@ -37,18 +38,18 @@ var Enemy = function () {
 		},
 		
 		die: function () {
-			this.health -= 1;			
-		
-			if (this.health <= 0) {
-				var index = GL.enemies.indexOf(this);
-				
-				if (index >= 0) {
-					GL.scoreUp(this.points);
-					GL.enemies.splice(index, 1);
-				}
-			}
-			
+			this.health -= 1;
 			this.healthBarWidth = (this.size / this.initialHealth) * this.health;
+
+			if (this.health <= 0){
+				GL.scoreUp(this.points);
+				GL.vanishEnemy(this)
+			}
+		},
+
+		killAndVanish: function () {
+			GL.scoreDown(this.penalty);
+			GL.vanishEnemy(this);
 		},
 		
 		update: function () {
@@ -68,6 +69,11 @@ var Enemy = function () {
 						GL.skills.splice(index, 1);
 					}
 				}
+			}
+
+
+			if (this.posX < (-this.size)){
+				this.killAndVanish();
 			}
 		},
 		

@@ -41,12 +41,22 @@ var GameLoop = function () {
 				myself.bgPattern = GC.gameGeneratePattern(myself.bg, 'repeat');
 				myself.theLoop();
 			};
+
 			GC.uiUpdateScore(this.score);
 		},
 		
 		scoreUp: function (_plusScore) {
 			this.score += _plusScore;
 			this.score = this.score > this.scoreGoal ? this.scoreGoal : this.score;
+			
+			this.scoreBarWidth = (this.scoreBarBGWidth / this.scoreGoal) * this.score;
+			
+			GC.uiUpdateScore(this.score);
+		},
+
+		scoreDown: function (_minusScore) {
+			this.score -= _minusScore;
+			this.score = this.score < 0 ? 0 : this.score;
 			
 			this.scoreBarWidth = (this.scoreBarBGWidth / this.scoreGoal) * this.score;
 			
@@ -60,6 +70,11 @@ var GameLoop = function () {
 			
 			newEnemy.init(randomSize, randomY);
 			this.enemies.push(newEnemy);
+		},
+
+		vanishEnemy: function  (_enemy) {
+			var enemyIndex = this.enemies.indexOf(_enemy);
+			this.enemies.splice(enemyIndex, 1);
 		},
 	
 		theLoop: function () {
@@ -100,10 +115,6 @@ var GameLoop = function () {
 						var enemy = this.enemies[this.auxIndex];
 						
 						enemy.update();
-						
-						if (enemy.posX < -enemy.size){
-							this.enemies.splice(this.auxIndex, 1);
-						}
 					}
 				}
 
