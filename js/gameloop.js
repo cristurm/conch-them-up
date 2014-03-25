@@ -15,6 +15,7 @@ var GameLoop = function () {
 			
 			// "playing" || "paused" || "victory" || "gameOver"
 			this.gameState = "playing";
+			this.prevEscKeyDown = KB.isKeyDown("esc");
 			
 			// score controlling / viewing
 			this.score = 0;
@@ -121,9 +122,13 @@ var GameLoop = function () {
 				}
 			}
 			
-			// General Player Input
-			if (KB.isKeyDown("esc")) {
+			// Pause
+			if (KB.isKeyDown("esc") == true && this.prevEscKeyDown !== true) {
 				this.gameState = this.gameState == "playing" ? "paused" : "playing";
+			}
+
+			if (this.prevEscKeyDown !== KB.isKeyDown("esc")) {
+				this.prevEscKeyDown = KB.isKeyDown("esc");
 			}
 		},
 		
