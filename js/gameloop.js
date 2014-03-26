@@ -13,8 +13,8 @@ var GameLoop = function () {
 			this.timerFlag = true;
 			this.summonDifference = 0;
 			
-			// "playing" || "paused" || "victory" || "gameOver"
-			this.gameState = "playing";
+			// "initial" || "playing" || "paused" || "victory" || "gameOver"
+			this.gameState = "initial";
 			this.prevEscKeyDown = KB.isKeyDown("esc");
 			
 			// score controlling / viewing
@@ -89,7 +89,14 @@ var GameLoop = function () {
 		},
 		
 		update: function () {
-			if (this.gameState == "playing") {
+			if (this.gameState == "initial") {
+				if (KB.isKeyDown("space") == true) {
+					this.gameState = "playing";
+					GC.clear(GC.uiContext);
+					GC.uiUpdateScore(this.score);
+				}
+
+			} else if (this.gameState == "playing") {
 				this.mainChar.update();
 			
 				// Summon Enemies Randomly
@@ -133,9 +140,11 @@ var GameLoop = function () {
 				}
 			}
 			
-			// Pause
+			// Pause / Unpause
 			if (KB.isKeyDown("esc") == true && this.prevEscKeyDown !== true) {
 				this.gameState = this.gameState == "playing" ? "paused" : "playing";
+				GC.clear(GC.uiContext);
+				GC.uiUpdateScore(this.score);
 			}
 
 			if (this.prevEscKeyDown !== KB.isKeyDown("esc")) {
@@ -144,28 +153,43 @@ var GameLoop = function () {
 		},
 		
 		draw: function () {
-			// Clear Game Canvas
-			GC.clear(GC.gameContext);
-			
-			// Draw Background Pattern
-			GC.gameDrawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
-			
-			// Draw Main Character
-			this.mainChar.draw();
-			
-			// Draw Enemies
-			this.auxIndex = 0;
-			for (this.auxIndex = 0; this.auxIndex < this.enemies.length; this.auxIndex += 1) {
-				if(this.enemies[this.auxIndex]) {
-					this.enemies[this.auxIndex].draw();
+			if (this.gameState == "initial") {
+				GC.clear(GC.uiContext);
+
+				// Draw Background Pattern
+				GC.gameDrawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
+
+				GC.uiWriteText("38px 'Press Start 2P'", 'white', 'Conch Them Up!', GC.width * 0.5, GC.height * 0.5 - 10, 'center');
+				GC.uiWriteText("bold 20px Arial", 'white', 'Press SPACEBAR do begin', GC.width * 0.5, GC.height * 0.5 + 20, 'center');
+			} else if (this.gameState == "playing" || this.gameState == "paused") {
+				// Clear Game Canvas
+				GC.clear(GC.gameContext);
+				
+				// Draw Background Pattern
+				GC.gameDrawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
+
+				// Draw Main Character
+				this.mainChar.draw();
+				
+				// Draw Enemies
+				this.auxIndex = 0;
+				for (this.auxIndex = 0; this.auxIndex < this.enemies.length; this.auxIndex += 1) {
+					if(this.enemies[this.auxIndex]) {
+						this.enemies[this.auxIndex].draw();
+					}
 				}
-			}
-			
-			// Draw Skills
-			this.auxIndex = 0;
-			for (this.auxIndex = 0; this.auxIndex < this.skills.length; this.auxIndex += 1) {
-				if(this.skills[this.auxIndex]) {
-					this.skills[this.auxIndex].draw();
+				
+				// Draw Skills
+				this.auxIndex = 0;
+				for (this.auxIndex = 0; this.auxIndex < this.skills.length; this.auxIndex += 1) {
+					if(this.skills[this.auxIndex]) {
+						this.skills[this.auxIndex].draw();
+					}
+				}
+
+				// Pause Message
+				if (this.gameState == "paused") {
+					GC.uiWriteText("38px 'Press Start 2P'", 'white', 'PAUSED', GC.width * 0.5, GC.height * 0.5, 'center');
 				}
 			}
 		}

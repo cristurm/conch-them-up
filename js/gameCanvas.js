@@ -24,10 +24,10 @@ var GameCanvas = function () {
 		
 		// UI canvas
 		uiUpdateScore: function (_newScore) {		
-			var label = "Score: " + _newScore;
+			var label = "SCORE: " + _newScore;
 			
 			this.clear(this.uiContext);
-			this.uiWriteText('14px Arial', 'white', label, 10, 20);
+			this.uiWriteText('bold 16px Arial', 'white', label, 10, 20, 'left');
 			this.uiDrawScoreBar(GL.scoreBarColor, GL.scoreBarBGColor, 10, 580, GL.scoreBarWidth, GL.scoreBarBGWidth, 10);
 		},
 		
@@ -39,9 +39,10 @@ var GameCanvas = function () {
 			this.uiContext.fillRect(_posX, _posY, _width, _height);
 		},
 		
-		uiWriteText: function (_font, _style, _text, _posX, _posY) {			
+		uiWriteText: function (_font, _style, _text, _posX, _posY, _align) {
 			this.uiContext.font = _font;
 			this.uiContext.fillStyle = _style;
+			this.uiContext.textAlign = _align;
 			this.uiContext.fillText(_text, _posX, _posY);
 		},
 		
