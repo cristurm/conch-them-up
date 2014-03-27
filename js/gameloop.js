@@ -3,7 +3,7 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequest
 var GameLoop = function () {
 	return {
 		init: function () {		
-			var myself = this;
+			var gameLoop = this;
 			
 			this.counter = 0;
 			this.auxIndex = 0;
@@ -36,10 +36,10 @@ var GameLoop = function () {
 			this.bg = new Image();
 			this.bg.src = 'img/grass_pattern.jpg';
 			
-			// begin!
-			this.bg.onload = function(){
-				myself.bgPattern = GC.gameGeneratePattern(myself.bg, 'repeat');
-				myself.theLoop();
+			// begin! (only when all needed assets are loaded)
+			this.bg.onload = function() {
+				gameLoop.bgPattern = GC.gameGeneratePattern(gameLoop.bg, 'repeat');
+				gameLoop.theLoop();
 			};
 
 			GC.uiUpdateScore(this.score);
@@ -78,13 +78,13 @@ var GameLoop = function () {
 		},
 	
 		theLoop: function () {
-			var myself = this;		
+			var gameLoop = this;		
 			
 			this.update();
 			this.draw();
 			
 			requestAnimationFrame(function () {
-				myself.theLoop()
+				gameLoop.theLoop();
 			});
 		},
 		
@@ -140,7 +140,11 @@ var GameLoop = function () {
 				}
 			}
 			
-			// Pause / Unpause
+			// Pause / Unpause			
+			/*
+			prevEscKeyDown is used to detect if the esc key was previously pressed (hold),
+			we must treat it so the game on pause/unpause like crazy due to processing speed 
+			*/
 			if (KB.isKeyDown("esc") == true && this.prevEscKeyDown !== true) {
 				this.gameState = this.gameState == "playing" ? "paused" : "playing";
 				GC.clear(GC.uiContext);
@@ -161,7 +165,7 @@ var GameLoop = function () {
 
 				GC.uiWriteText("38px 'Press Start 2P'", 'white', 'Conch Them Up!', GC.width * 0.5, GC.height * 0.5 - 10, 'center');
 				GC.uiWriteText("bold 20px Arial", 'white', 'Press SPACEBAR do begin', GC.width * 0.5, GC.height * 0.5 + 20, 'center');
-			} else if (this.gameState == "playing" || this.gameState == "paused") {
+			} else if (this.gameState == "playing") {
 				// Clear Game Canvas
 				GC.clear(GC.gameContext);
 				
@@ -186,11 +190,8 @@ var GameLoop = function () {
 						this.skills[this.auxIndex].draw();
 					}
 				}
-
-				// Pause Message
-				if (this.gameState == "paused") {
-					GC.uiWriteText("38px 'Press Start 2P'", 'white', 'PAUSED', GC.width * 0.5, GC.height * 0.5, 'center');
-				}
+			} else if (this.gameState == "paused") {
+				GC.uiWriteText("38px 'Press Start 2P'", 'white', 'PAUSED', GC.width * 0.5, GC.height * 0.5, 'center');
 			}
 		}
 	}

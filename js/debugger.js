@@ -17,10 +17,10 @@ var Debugger = function () {
 		},
 		
 		bindEvents: function () {
-			var myself = this;
+			var debug = this;
 			
 			this.clearButton.addEventListener('click', function() {
-				myself.debugArea.innerHTML = "";
+				debug.debugArea.innerHTML = "";
 			});
 		}
 	}
