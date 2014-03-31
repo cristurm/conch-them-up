@@ -18,32 +18,24 @@ var Character = function () {
 		
 		move: function () {
 			// up
-			if (KB.isKeyDown("w")) {
-				if (this.posY > 10) { 
-					this.posY -=  this.speed; 
-				}
+			if (KB.isKeyDown("w") && this.posY > 10) { 
+				this.posY -=  this.speed; 
 			}
 			
 			// down
-			if (KB.isKeyDown("s")) {
-				if (this.posY < GC.height - this.charHeight - 10) { 
-					this.posY += this.speed; 
-				}
+			if (KB.isKeyDown("s") && this.posY < GC.height - this.charHeight - 10) { 
+				this.posY += this.speed;
 				
 			}
 			
 			// right
-			if (KB.isKeyDown("d")) {
-				if (this.posX < GC.width - this.charWidth - 10) { 
-					this.posX += this.speed; 
-				}
+			if (KB.isKeyDown("d") && this.posX < GC.width - this.charWidth - 10) { 
+				this.posX += this.speed;
 			}
 			
 			// left
-			if (KB.isKeyDown("a")) {
-				if (this.posX > 10) { 
-					this.posX -= this.speed; 
-				}
+			if (KB.isKeyDown("a") && this.posX > 10) { 
+				this.posX -= this.speed; 
 			}
 		},
 		

@@ -93,6 +93,14 @@ var GameLoop = function () {
 			this.enemies.splice(enemyIndex, 1);
 		},
 
+		reset: function () {
+			this.score = 0;
+			this.enemies = [];
+			this.skills = [];
+			this.mainChar = new Character();
+			this.mainChar.init();
+		},
+
 		/* UPDATE METHODS */
 		initialStateUpdate: function () {
 			if (KB.isKeyDown("space") == true) {
@@ -146,8 +154,30 @@ var GameLoop = function () {
 			}
 		},
 
+		togglePauseStateUpdate: function () {
+			// Pause / Unpause			
+			/*
+			prevEscKeyDown is used to detect if the esc key was previously pressed (on hold),
+			we must treat it so the game won't pause/unpause like crazy due to processing spee.
+			*/
+			if (KB.isKeyDown("esc") == true && this.prevEscKeyDown !== true) {
+				this.gameState = this.gameState == "playing" ? "paused" : "playing";
+				GC.clear(GC.uiContext);
+				GC.uiUpdateScore(this.score);
+			}
+
+			if (this.prevEscKeyDown !== KB.isKeyDown("esc")) {
+				this.prevEscKeyDown = KB.isKeyDown("esc");
+			}
+		},
+
 		gameOverStateUpdate: function () {
-			console.log("K.O. !!!", this.gameState);
+			if (KB.isKeyDown("space") == true) {
+				this.reset();
+				this.gameState = "playing";
+				GC.clear(GC.uiContext);
+				GC.uiUpdateScore(this.score);
+			}
 		},
 		
 		update: function () {
@@ -158,28 +188,14 @@ var GameLoop = function () {
 
 				case "playing" :
 					this.playingStateUpdate();
+				
+				case "paused" :
+					this.togglePauseStateUpdate();
 					break;
 
 				case "gameOver" :
 					this.gameOverStateUpdate();
 					break;
-			}
-
-			// Pause / Unpause			
-			/*
-			prevEscKeyDown is used to detect if the esc key was previously pressed (hold),
-			we must treat it so the game on pause/unpause like crazy due to processing speed 
-			*/
-			if (this.gameState == "playing" || this.gameState == "paused") {
-				if (KB.isKeyDown("esc") == true && this.prevEscKeyDown !== true) {
-					this.gameState = this.gameState == "playing" ? "paused" : "playing";
-					GC.clear(GC.uiContext);
-					GC.uiUpdateScore(this.score);
-				}
-
-				if (this.prevEscKeyDown !== KB.isKeyDown("esc")) {
-					this.prevEscKeyDown = KB.isKeyDown("esc");
-				}
 			}
 		},
 		
