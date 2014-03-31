@@ -12,6 +12,10 @@ var Skill = function () {
 		
 		update: function () {
 			this.posX += this.speed;
+
+			if (this.posX > GC.width){
+				GL.vanishSkill(this);
+			}
 		},
 		
 		draw: function () {

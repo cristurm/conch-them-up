@@ -93,6 +93,11 @@ var GameLoop = function () {
 			this.enemies.splice(enemyIndex, 1);
 		},
 
+		vanishSkill: function (_skill) {
+			var skillIndex = this.skills.indexOf(_skill);
+			this.skills.splice(skillIndex, 1);
+		},
+
 		reset: function () {
 			this.score = 0;
 			this.enemies = [];
@@ -146,10 +151,6 @@ var GameLoop = function () {
 					var skill = this.skills[this.auxIndex];
 				
 					skill.update();
-					
-					if (skill.posX > GC.width){
-						this.skills.splice(this.auxIndex, 1);
-					}
 				}
 			}
 		},

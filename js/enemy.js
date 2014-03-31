@@ -43,11 +43,11 @@ var Enemy = function () {
 
 			if (this.health <= 0){
 				GL.scoreUp(this.points);
-				GL.vanishEnemy(this)
+				GL.vanishEnemy(this);
 			}
 		},
 
-		killAndVanish: function () {
+		kill: function () {
 			GL.scoreDown(this.penalty);
 			GL.vanishEnemy(this);
 		},
@@ -62,18 +62,16 @@ var Enemy = function () {
 					
 					if (((skill.posX + skill.size) > this.posX && skill.posX < (this.posX + this.size)) &&
 						((skill.posY + skill.size) > this.posY && skill.posY < (this.posY + this.size))) {
-						
+
 						this.die();
-						
-						var index = GL.skills.indexOf(skill);						
-						GL.skills.splice(index, 1);
+						GL.vanishSkill(skill);
 					}
 				}
 			}
 
 
 			if (this.posX < (-this.size)){
-				this.killAndVanish();
+				this.kill();
 			}
 		},
 		
