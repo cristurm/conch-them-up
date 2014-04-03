@@ -32,17 +32,15 @@ var GameLoop = function () {
 			this.mainChar.init();
 			
 			// scene sprites
-			this.bgPattern = '';
+			this.bgPattern = "";
 			this.bg = new Image();
-			this.bg.src = 'img/grass_pattern.jpg';
+			this.bg.src = "img/grass_pattern.jpg";
 			
 			// begin! (only when all needed assets are loaded)
 			this.bg.onload = function() {
-				gameLoop.bgPattern = GC.gameGeneratePattern(gameLoop.bg, 'repeat');
+				gameLoop.bgPattern = GC.gameGeneratePattern(gameLoop.bg, "repeat");
 				gameLoop.theLoop();
 			};
-
-			GC.uiUpdateScore(this.score);
 		},
 
 		theLoop: function () {
@@ -72,7 +70,6 @@ var GameLoop = function () {
 				this.gameState = "gameOver";
 				this.score = 0;
 			}
-			//this.score = this.score < 0 ? 0 : this.score;
 			
 			this.scoreBarWidth = (this.scoreBarBGWidth / this.scoreGoal) * this.score;
 			
@@ -207,8 +204,8 @@ var GameLoop = function () {
 			// Draw Background Pattern
 			GC.gameDrawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
 
-			GC.uiWriteText("38px 'Press Start 2P'", 'white', 'Conch Them Up!', GC.width * 0.5, GC.height * 0.5 - 10, 'center');
-			GC.uiWriteText("bold 20px Arial", 'white', 'Press SPACEBAR do begin', GC.width * 0.5, GC.height * 0.5 + 20, 'center');
+			GC.uiWriteText("38px 'Press Start 2P'", "white", "Conch Them Up!", GC.width * 0.5, GC.height * 0.5 - 10, "center");
+			GC.uiWriteText("bold 20px monospace", "white", "Press SPACEBAR do begin", GC.width * 0.5, GC.height * 0.5 + 20, "center");
 		},
 
 		playingStateDraw: function () {
@@ -244,8 +241,8 @@ var GameLoop = function () {
 			// Draw Background Pattern
 			GC.gameDrawRectangle(this.bgPattern, 0, 0, GC.width, GC.height);
 
-			GC.uiWriteText("38px 'Press Start 2P'", 'black', 'GAME OVER', GC.width * 0.5, GC.height * 0.5 - 10, 'center');
-			GC.uiWriteText("bold 20px Arial", 'black', 'Press SPACEBAR do restart', GC.width * 0.5, GC.height * 0.5 + 20, 'center');
+			GC.uiWriteText("38px 'Press Start 2P'", "black", "GAME OVER", GC.width * 0.5, GC.height * 0.5 - 10, "center");
+			GC.uiWriteText("bold 20px monospace", "black", "Press SPACEBAR do restart", GC.width * 0.5, GC.height * 0.5 + 20, "center");
 		},
 
 		draw: function () {
@@ -259,7 +256,7 @@ var GameLoop = function () {
 					break;
 
 				case "paused" :
-					GC.uiWriteText("38px 'Press Start 2P'", 'white', 'PAUSED', GC.width * 0.5, GC.height * 0.5, 'center');
+					GC.uiWriteText("38px 'Press Start 2P'", "white", "PAUSED", GC.width * 0.5, GC.height * 0.5, "center");
 					break;
 
 				case "gameOver" :

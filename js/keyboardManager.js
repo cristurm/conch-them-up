@@ -2,15 +2,12 @@ var KeyboardManager = function () {
 	return {
 		init: function () {
 			this.pressedKeys = {};
-			
-			this.bindEvents();
 		},
 		
-		updatePressedKeys: function (_event, _status) {
-			var keyCode = _event.keyCode,
-				key;
+		updatePressedKeys: function (_keyCode, _status) {
+			var key;
 			
-			switch (keyCode) {
+			switch (_keyCode) {
 				case 32 :
 					key = 'SPACE';
 					break;
@@ -20,7 +17,7 @@ var KeyboardManager = function () {
 					break;
 				
 				default :
-					key = String.fromCharCode(keyCode);
+					key = String.fromCharCode(_keyCode);
 					break;
 			}
 
@@ -29,24 +26,6 @@ var KeyboardManager = function () {
 		
 		isKeyDown: function (_key) {
 			return this.pressedKeys[_key.toUpperCase()];
-		},
-		
-		bindEvents: function () {
-			var keyboardManager = this;
-			
-			document.addEventListener('keydown', function(_event) {
-				_event.preventDefault();
-				keyboardManager.updatePressedKeys(_event, true);
-			});
-
-			document.addEventListener('keyup', function(_event) {
-				_event.preventDefault();
-				keyboardManager.updatePressedKeys(_event, false);
-			});
-
-			window.addEventListener('blur', function() {
-				keyboardManager.pressedKeys = {};
-			});
 		}
 	}
 }

@@ -27,7 +27,7 @@ var GameCanvas = function () {
 			var label = "SCORE: " + _newScore;
 			
 			this.clear(this.uiContext);
-			this.uiWriteText('bold 16px Arial', 'white', label, 10, 20, 'left');
+			this.uiWriteText("bold 16px monospace", "white", label, 10, 20, "left");
 			this.uiDrawScoreBar(GL.scoreBarColor, GL.scoreBarBGColor, 10, 580, GL.scoreBarWidth, GL.scoreBarBGWidth, 10);
 		},
 		

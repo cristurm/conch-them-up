@@ -4,6 +4,9 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #eee;
+}
+
+h1 {
 	text-align: center;
 }
 
@@ -12,17 +15,17 @@ h1, h2 {
 }
 
 #instructions {
-	text-align: left;
 	max-width: 800px;
-	margin: 0.5em 0 2em 0;
-	display: inline-block;
+	margin: 0.5em auto 2em auto;
+	display: block;
 }
 
 #game-area {
 	position: relative;
 	width: 800px;
 	height: 600px;
-	display: inline-block;
+	margin: 0 auto;
+	display: block;
 }
 
 #game-area canvas {
