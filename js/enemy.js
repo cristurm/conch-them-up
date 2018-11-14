@@ -4,7 +4,7 @@ var Enemy = function () {
 			this.type = _type;
 			this.auxIndex = 0;
 			this.healthBarColor = "#ff0000";
-			this.healthBarBGColor = "#ffffff";
+			this.healthBarBCANVASolor = "#ffffff";
 			
 			switch (_type) {
 				case "big" :
@@ -27,7 +27,7 @@ var Enemy = function () {
 			
 			this.posX = 800;			
 			this.posY = _posY < 10 ? 10 : _posY; // Add 10px spacing from the top if needed
-			this.posY = _posY > (GC.height - this.size - 10) ? GC.height - this.size - 10 : this.posY; // Fix and add 10px spacing from the bottom if needed
+			this.posY = _posY > (CANVAS.height - this.size - 10) ? CANVAS.height - this.size - 10 : this.posY; // Fix and add 10px spacing from the bottom if needed
 			this.initialHealth = this.health;
 			this.healthBarWidth = this.size;
 			this.base = (this.posY + this.size) + 2;
@@ -42,29 +42,29 @@ var Enemy = function () {
 			this.healthBarWidth = (this.size / this.initialHealth) * this.health;
 
 			if (this.health <= 0){
-				GL.scoreUp(this.points);
-				GL.vanishEnemy(this);
+				GAMEMASTER.scoreUp(this.points);
+				GAMEMASTER.vanishEnemy(this);
 			}
 		},
 
 		kill: function () {
-			GL.scoreDown(this.penalty);
-			GL.vanishEnemy(this);
+			GAMEMASTER.scoreDown(this.penalty);
+			GAMEMASTER.vanishEnemy(this);
 		},
 		
 		update: function () {
 			this.move();
 			
 			this.auxIndex = 0;
-			for (this.auxIndex = 0; this.auxIndex < GL.skills.length; this.auxIndex += 1) {
-				if(GL.skills[this.auxIndex]) {
-					var skill = GL.skills[this.auxIndex];
+			for (this.auxIndex = 0; this.auxIndex < GAMEMASTER.skills.length; this.auxIndex += 1) {
+				if(GAMEMASTER.skills[this.auxIndex]) {
+					var skill = GAMEMASTER.skills[this.auxIndex];
 					
 					if (((skill.posX + skill.size) > this.posX && skill.posX < (this.posX + this.size)) &&
 						((skill.posY + skill.size) > this.posY && skill.posY < (this.posY + this.size))) {
 
 						this.die();
-						GL.vanishSkill(skill);
+						GAMEMASTER.vanishSkill(skill);
 					}
 				}
 			}
@@ -76,9 +76,9 @@ var Enemy = function () {
 		},
 		
 		draw: function () {
-			GC.gameDrawRectangle(this.color, this.posX, this.posY, this.size, this.size);
-			GC.gameDrawRectangle(this.healthBarBGColor, this.posX, this.base, this.size, 2);
-			GC.gameDrawRectangle(this.healthBarColor, this.posX, this.base, this.healthBarWidth, 2);
+			CANVAS.gameDrawRectangle(this.color, this.posX, this.posY, this.size, this.size);
+			CANVAS.gameDrawRectangle(this.healthBarBCANVASolor, this.posX, this.base, this.size, 2);
+			CANVAS.gameDrawRectangle(this.healthBarColor, this.posX, this.base, this.healthBarWidth, 2);
 		}
 	}
 }

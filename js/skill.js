@@ -9,17 +9,17 @@ var Skill = function () {
 			this.size = 5;
 			this.speed = 10;
 		},
-		
+
 		update: function () {
 			this.posX += this.speed;
 
-			if (this.posX > GC.width){
-				GL.vanishSkill(this);
+			if (this.posX > CANVAS.width){
+				GAMEMASTER.vanishSkill(this);
 			}
 		},
-		
+
 		draw: function () {
-			GC.gameDrawRectangle("#fff", this.posX, this.posY, this.size, this.size);
+			CANVAS.gameDrawRectangle("#fff", this.posX, this.posY, this.size, this.size);
 		}
 	}
 }
