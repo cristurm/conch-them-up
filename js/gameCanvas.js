@@ -21,6 +21,10 @@ class GameCanvas {
 		return pattern;
 	}
 
+	clearGame () {
+		this.clear(this.gameContext);
+	}
+
 	// UI canvas
 	uiUpdateScore (_newScore) {
 		var label = "SCORE: " + _newScore;
@@ -43,6 +47,10 @@ class GameCanvas {
 		this.uiContext.fillStyle = _style;
 		this.uiContext.textAlign = _align;
 		this.uiContext.fillText(_text, _posX, _posY);
+	}
+
+	clearUI () {
+		this.clear(this.uiContext);
 	}
 
 	// Generic

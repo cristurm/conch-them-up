@@ -104,7 +104,7 @@ class GameMaster {
 	initialStateUpdate () {
 		if (KEYBOARD.isKeyDown("space") == true) {
 			this.gameState = "playing";
-			CANVAS.clear(CANVAS.uiContext);
+			CANVAS.clearUI();
 			CANVAS.uiUpdateScore(this.score);
 		}
 	}
@@ -157,7 +157,7 @@ class GameMaster {
 		*/
 		if (KEYBOARD.isKeyDown("esc") == true && this.prevEscKeyDown !== true) {
 			this.gameState = this.gameState == "playing" ? "paused" : "playing";
-			CANVAS.clear(CANVAS.uiContext);
+			CANVAS.clearUI();
 			CANVAS.uiUpdateScore(this.score);
 		}
 
@@ -170,7 +170,7 @@ class GameMaster {
 		if (KEYBOARD.isKeyDown("space") == true) {
 			this.reset();
 			this.gameState = "playing";
-			CANVAS.clear(CANVAS.uiContext);
+			CANVAS.clearUI();
 			CANVAS.uiUpdateScore(this.score);
 		}
 	}
@@ -196,7 +196,7 @@ class GameMaster {
 
 	/* DRAW METHODS */
 	initialStateDraw () {
-		CANVAS.clear(CANVAS.uiContext);
+		CANVAS.clearUI();
 
 		// Draw Background Pattern
 		CANVAS.gameDrawRectangle(this.bgPattern, 0, 0, CANVAS.width, CANVAS.height);
@@ -207,7 +207,7 @@ class GameMaster {
 
 	playingStateDraw () {
 		// Clear Game Canvas
-		CANVAS.clear(CANVAS.gameContext);
+		CANVAS.clearGame();
 
 		// Draw Background Pattern
 		CANVAS.gameDrawRectangle(this.bgPattern, 0, 0, CANVAS.width, CANVAS.height);
@@ -233,7 +233,7 @@ class GameMaster {
 	}
 
 	gameOverStateDraw () {
-		CANVAS.clear(CANVAS.uiContext);
+		CANVAS.clearUI();
 
 		// Draw Background Pattern
 		CANVAS.gameDrawRectangle(this.bgPattern, 0, 0, CANVAS.width, CANVAS.height);
