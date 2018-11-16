@@ -26,8 +26,8 @@ class GameMaster {
 
 		// game elements
 		this.enemies = [];
-		this.skills = [];
 		this.mainChar = new Character(this);
+		this.machinegun = new MachineGun(this);
 
 		// scene sprites
 		this.bgPattern = "";
@@ -87,17 +87,15 @@ class GameMaster {
 		this.enemies.splice(enemyIndex, 1);
 	}
 
-	vanishSkill (_skill) {
-		var skillIndex = this.skills.indexOf(_skill);
-		this.skills.splice(skillIndex, 1);
+	vanishSkill (_bullet) {
+		this.machinegun.vanishBullet(_bullet);
 	}
 
 	reset () {
 		this.score = 0;
 		this.enemies = [];
-		this.skills = [];
+		this.machinegun.emptyMachinegun();
 		this.mainChar = new Character();
-		this.mainChar.init();
 	}
 
 	/* UPDATE METHODS */
@@ -138,15 +136,7 @@ class GameMaster {
 			}
 		}
 
-		// Update skills
-		this.auxIndex = 0;
-		for (this.auxIndex = 0; this.auxIndex < this.skills.length; this.auxIndex += 1) {
-			if(this.skills[this.auxIndex]) {
-				var skill = this.skills[this.auxIndex];
-
-				skill.update();
-			}
-		}
+		this.machinegun.update(this.mainChar);
 	}
 
 	togglePauseStateUpdate () {
@@ -223,13 +213,7 @@ class GameMaster {
 			}
 		}
 
-		// Draw Skills
-		this.auxIndex = 0;
-		for (this.auxIndex = 0; this.auxIndex < this.skills.length; this.auxIndex += 1) {
-			if(this.skills[this.auxIndex]) {
-				this.skills[this.auxIndex].draw();
-			}
-		}
+		this.machinegun.draw();
 	}
 
 	gameOverStateDraw () {

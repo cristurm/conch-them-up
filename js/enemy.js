@@ -55,9 +55,9 @@ class Enemy {
 		this.move();
 
 		this.auxIndex = 0;
-		for (this.auxIndex = 0; this.auxIndex < GAMEMASTER.skills.length; this.auxIndex += 1) {
-			if(GAMEMASTER.skills[this.auxIndex]) {
-				var skill = GAMEMASTER.skills[this.auxIndex];
+		for (this.auxIndex = 0; this.auxIndex < GAMEMASTER.machinegun.bullets.length; this.auxIndex += 1) {
+			if(GAMEMASTER.machinegun.bullets[this.auxIndex]) {
+				var skill = GAMEMASTER.machinegun.bullets[this.auxIndex];
 
 				if (((skill.posX + skill.size) > this.posX && skill.posX < (this.posX + this.size)) &&
 					((skill.posY + skill.size) > this.posY && skill.posY < (this.posY + this.size))) {

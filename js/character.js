@@ -9,12 +9,6 @@ class Character {
 		this.speed = 5;
 		this.charWidth = this.size;
 		this.charHeight = this.size * 2;
-		this.lastSkill;
-		this.canShoot = true;
-		this.currentTime = gameMaster.date.getTime();
-		this.pastTime = gameMaster.date.getTime();
-		this.shootDifference = 0;
-		this.skillDelay = 150;
 	}
 
 	move () {
@@ -40,34 +34,8 @@ class Character {
 		}
 	}
 
-	shoot (_skillType, _skillX, _skillY) {
-		this.canShoot = false;
-		this.pastTime = this.gameMaster.date.getTime();
-
-		var newSkill = new Skill(_skillType, _skillX, _skillY);
-
-		this.gameMaster.skills.push(newSkill);
-		this.lastSkill = this.gameMaster.skills[this.gameMaster.skills.length - 1];
-	}
-
 	update () {
 		this.move();
-
-		// Shoot!
-		if (this.canShoot) {
-			var skillPosY = this.posY + this.charHeight * 0.5,
-				skillPosX = this.posX + this.charWidth * 0.5;
-
-			this.shoot("thunder", skillPosX, skillPosY);
-		}
-
-		// Bullet Delay
-		this.currentTime = this.gameMaster.date.getTime();
-		this.shootDifference = this.currentTime - this.pastTime;
-
-		if (this.shootDifference > this.skillDelay) {
-			this.canShoot = true;
-		}
 	}
 
 	draw () {
