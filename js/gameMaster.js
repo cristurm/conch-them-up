@@ -16,18 +16,12 @@ class GameMaster {
 		this.gameState = "initial";
 		this.prevEscKeyDown = KEYBOARD.isKeyDown("esc");
 
-		// score controlling / viewing
-		this.score = 0;
-		this.scoreGoal = 1000;
-		this.scoreBarColor = "#00ff00";
-		this.scoreBarBCANVASolor = "#ff9900";
-		this.scoreBarBGWidth = CANVAS.width - 20;
-		this.scoreBarWidth = this.score;
-
 		// game elements
 		this.enemies = [];
 		this.mainChar = new Character(this);
 		this.machinegun = new MachineGun(this);
+
+		this.scoreManager = new ScoreManager(this);
 
 		// scene sprites
 		this.bgPattern = "";
@@ -52,26 +46,8 @@ class GameMaster {
 		});
 	}
 
-	scoreUp (_plusScore) {
-		this.score += _plusScore;
-		this.score = this.score > this.scoreGoal ? this.scoreGoal : this.score;
-
-		this.scoreBarWidth = (this.scoreBarBGWidth / this.scoreGoal) * this.score;
-
-		CANVAS.uiUpdateScore(this.score);
-	}
-
-	scoreDown (_minusScore) {
-		this.score -= _minusScore;
-
-		if (this.score < 0) {
-			this.gameState = "gameOver";
-			this.score = 0;
-		}
-
-		this.scoreBarWidth = (this.scoreBarBGWidth / this.scoreGoal) * this.score;
-
-		CANVAS.uiUpdateScore(this.score);
+	endGame () {
+		this.gameState = "gameOver";
 	}
 
 	summonEnemy () {
@@ -92,18 +68,17 @@ class GameMaster {
 	}
 
 	reset () {
-		this.score = 0;
 		this.enemies = [];
 		this.machinegun.emptyMachinegun();
-		this.mainChar = new Character();
+		this.mainChar.rebirth();
+		this.scoreManager.resetScore();
 	}
 
 	/* UPDATE METHODS */
 	initialStateUpdate () {
-		if (KEYBOARD.isKeyDown("space") == true) {
+		if (KEYBOARD.isKeyDown("space")) {
 			this.gameState = "playing";
-			CANVAS.clearUI();
-			CANVAS.uiUpdateScore(this.score);
+			this.scoreManager.updateScoreUI();
 		}
 	}
 
@@ -143,25 +118,21 @@ class GameMaster {
 		// Pause / Unpause
 		/*
 		prevEscKeyDown is used to detect if the esc key was previously pressed (on hold),
-		we must treat it so the game won't pause/unpause like crazy due to processing spee.
+		we must treat it so the game won't pause/unpause like crazy due to processing speed.
 		*/
-		if (KEYBOARD.isKeyDown("esc") == true && this.prevEscKeyDown !== true) {
-			this.gameState = this.gameState == "playing" ? "paused" : "playing";
-			CANVAS.clearUI();
-			CANVAS.uiUpdateScore(this.score);
+		if (KEYBOARD.isKeyDown("esc") && !this.prevEscKeyDown) {
+			this.gameState = this.gameState === "playing" ? "paused" : "playing";
+			this.scoreManager.updateScoreUI();
 		}
 
-		if (this.prevEscKeyDown !== KEYBOARD.isKeyDown("esc")) {
-			this.prevEscKeyDown = KEYBOARD.isKeyDown("esc");
-		}
+		this.prevEscKeyDown = KEYBOARD.isKeyDown("esc");
 	}
 
 	gameOverStateUpdate () {
-		if (KEYBOARD.isKeyDown("space") == true) {
+		if (KEYBOARD.isKeyDown("space")) {
 			this.reset();
 			this.gameState = "playing";
-			CANVAS.clearUI();
-			CANVAS.uiUpdateScore(this.score);
+			this.scoreManager.updateScoreUI();
 		}
 	}
 
@@ -186,7 +157,7 @@ class GameMaster {
 
 	/* DRAW METHODS */
 	initialStateDraw () {
-		CANVAS.clearUI();
+		CANVAS.uiClearContext();
 
 		// Draw Background Pattern
 		CANVAS.gameDrawRectangle(this.bgPattern, 0, 0, CANVAS.width, CANVAS.height);
@@ -197,7 +168,7 @@ class GameMaster {
 
 	playingStateDraw () {
 		// Clear Game Canvas
-		CANVAS.clearGame();
+		CANVAS.gameClearContext();
 
 		// Draw Background Pattern
 		CANVAS.gameDrawRectangle(this.bgPattern, 0, 0, CANVAS.width, CANVAS.height);
@@ -217,7 +188,7 @@ class GameMaster {
 	}
 
 	gameOverStateDraw () {
-		CANVAS.clearUI();
+		CANVAS.uiClearContext();
 
 		// Draw Background Pattern
 		CANVAS.gameDrawRectangle(this.bgPattern, 0, 0, CANVAS.width, CANVAS.height);

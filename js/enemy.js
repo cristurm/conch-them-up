@@ -41,13 +41,13 @@ class Enemy {
 		this.healthBarWidth = (this.size / this.initialHealth) * this.health;
 
 		if (this.health <= 0){
-			GAMEMASTER.scoreUp(this.points);
+			GAMEMASTER.scoreManager.scoreUp(this.points);
 			GAMEMASTER.vanishEnemy(this);
 		}
 	}
 
 	kill () {
-		GAMEMASTER.scoreDown(this.penalty);
+		GAMEMASTER.scoreManager.scoreDown(this.penalty);
 		GAMEMASTER.vanishEnemy(this);
 	}
 
@@ -57,13 +57,13 @@ class Enemy {
 		this.auxIndex = 0;
 		for (this.auxIndex = 0; this.auxIndex < GAMEMASTER.machinegun.bullets.length; this.auxIndex += 1) {
 			if(GAMEMASTER.machinegun.bullets[this.auxIndex]) {
-				var skill = GAMEMASTER.machinegun.bullets[this.auxIndex];
+				var bullet = GAMEMASTER.machinegun.bullets[this.auxIndex];
 
-				if (((skill.posX + skill.size) > this.posX && skill.posX < (this.posX + this.size)) &&
-					((skill.posY + skill.size) > this.posY && skill.posY < (this.posY + this.size))) {
+				if (((bullet.posX + bullet.size) > this.posX && bullet.posX < (this.posX + this.size)) &&
+					((bullet.posY + bullet.size) > this.posY && bullet.posY < (this.posY + this.size))) {
 
 					this.die();
-					GAMEMASTER.vanishSkill(skill);
+					GAMEMASTER.vanishSkill(bullet);
 				}
 			}
 		}

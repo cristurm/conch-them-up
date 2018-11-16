@@ -13,7 +13,7 @@ const BindGameEvents = () => {
 		// In case the player switches windows/tabs
 		KEYBOARD.pressedKeys = {};
 
-		if (GAMEMASTER.gameState == "playing") {
+		if (GAMEMASTER.gameState === "playing") {
 			GAMEMASTER.gameState = "paused";
 		}
 	});

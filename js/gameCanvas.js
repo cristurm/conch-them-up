@@ -21,19 +21,11 @@ class GameCanvas {
 		return pattern;
 	}
 
-	clearGame () {
+	gameClearContext () {
 		this.clear(this.gameContext);
 	}
 
 	// UI canvas
-	uiUpdateScore (_newScore) {
-		var label = "SCORE: " + _newScore;
-
-		this.clear(this.uiContext);
-		this.uiWriteText("bold 16px monospace", "white", label, 10, 20, "left");
-		this.uiDrawScoreBar(GAMEMASTER.scoreBarColor, GAMEMASTER.scoreBarBCANVASolor, 10, 580, GAMEMASTER.scoreBarWidth, GAMEMASTER.scoreBarBGWidth, 10);
-	}
-
 	uiDrawScoreBar (_style, _bgStyle, _posX, _posY, _width, _bgWidth, _height) {
 		this.uiContext.fillStyle = _bgStyle;
 		this.uiContext.fillRect(_posX, _posY, _bgWidth, _height);
@@ -49,7 +41,7 @@ class GameCanvas {
 		this.uiContext.fillText(_text, _posX, _posY);
 	}
 
-	clearUI () {
+	uiClearContext () {
 		this.clear(this.uiContext);
 	}
 

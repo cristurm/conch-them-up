@@ -11,6 +11,16 @@ class Character {
 		this.charHeight = this.size * 2;
 	}
 
+	rebirth () {
+		this.posX = 50;
+		this.posY = CANVAS.height * 0.5;
+		this.size = 20;
+		this.color = "#fae715";
+		this.speed = 5;
+		this.charWidth = this.size;
+		this.charHeight = this.size * 2;
+	}
+
 	move () {
 		// up
 		if (KEYBOARD.isKeyDown("w") && this.posY > 10) {
