@@ -1,5 +1,5 @@
 class KeyboardManager {
-	constructor () {
+	constructor (gameMaster) {
 		this.pressedKeys = {};
 	}
 
