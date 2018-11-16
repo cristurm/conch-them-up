@@ -10,7 +10,7 @@ class Character {
 		this.charWidth = this.size;
 		this.charHeight = this.size * 2;
 		this.lastSkill;
-		this.skillsBool = true;
+		this.canShoot = true;
 		this.currentTime = gameMaster.date.getTime();
 		this.pastTime = gameMaster.date.getTime();
 		this.shootDifference = 0;
@@ -41,11 +41,11 @@ class Character {
 	}
 
 	shoot (_skillType, _skillX, _skillY) {
-		this.skillsBool = false;
+		this.canShoot = false;
 		this.pastTime = this.gameMaster.date.getTime();
 
-		var newSkill = new Skill();
-		newSkill.init(_skillType, _skillX, _skillY);
+		var newSkill = new Skill(_skillType, _skillX, _skillY);
+
 		this.gameMaster.skills.push(newSkill);
 		this.lastSkill = this.gameMaster.skills[this.gameMaster.skills.length - 1];
 	}
@@ -54,7 +54,7 @@ class Character {
 		this.move();
 
 		// Shoot!
-		if (KEYBOARD.isKeyDown("space") && this.skillsBool) {
+		if (this.canShoot) {
 			var skillPosY = this.posY + this.charHeight * 0.5,
 				skillPosX = this.posX + this.charWidth * 0.5;
 
@@ -66,7 +66,7 @@ class Character {
 		this.shootDifference = this.currentTime - this.pastTime;
 
 		if (this.shootDifference > this.skillDelay) {
-			this.skillsBool = true;
+			this.canShoot = true;
 		}
 	}
 
