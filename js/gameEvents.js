@@ -1,4 +1,4 @@
-const BindGameEvents = (gameMaster) => {
+const BindGameEvents = () => {
 	document.addEventListener('keydown', (_event) => {
 		_event.preventDefault();
 		KEYBOARD.updatePressedKeys(_event.keyCode, true);
@@ -13,8 +13,8 @@ const BindGameEvents = (gameMaster) => {
 		// In case the player switches windows/tabs
 		KEYBOARD.pressedKeys = {};
 
-		if (gameMaster.gameState == "playing") {
-			gameMaster.gameState = "paused";
+		if (GAMEMASTER.gameState == "playing") {
+			GAMEMASTER.gameState = "paused";
 		}
 	});
 }

@@ -75,11 +75,10 @@ class GameMaster {
 	}
 
 	summonEnemy () {
-		var newEnemy = new Enemy(),
-			randomY = Math.floor(Math.random() * CANVAS.height),
-			randomSize = Math.random() > 0.7 ? "big" : "small";
+		const randomY = Math.floor(Math.random() * CANVAS.height);
+		const randomSize = Math.random() > 0.7 ? "big" : "small";
+		const newEnemy = new Enemy(randomSize, randomY);
 
-		newEnemy.init(randomSize, randomY);
 		this.enemies.push(newEnemy);
 	}
 
