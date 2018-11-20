@@ -44,16 +44,12 @@ class GameMaster {
 		this.gameState = "gameOver";
 	}
 
-	increaseScore (_points) {
-		this.scoreManager.scoreUp(_points);
+	updateScore (_points) {
+		this.scoreManager.updateScore(_points);
 	}
 
-	decreaseScore (_penalty) {
-		this.scoreManager.scoreDown(_penalty);
-	}
-
-	vanishBullet (_bullet) {
-		this.machinegun.vanishBullet(_bullet);
+	removeBullet (_bullet) {
+		this.machinegun.removeBullet(_bullet);
 	}
 
 	getBullets () {
@@ -136,7 +132,6 @@ class GameMaster {
 	}
 
 	playingStateDraw () {
-		// Clear Game Canvas
 		CANVAS.gameClearContext();
 
 		// Draw Background Pattern

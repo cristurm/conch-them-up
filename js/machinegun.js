@@ -13,7 +13,7 @@ class Bullet {
 		this.posX += this.speed;
 
 		if (this.posX > CANVAS.width){
-			this.machinegun.vanishBullet(this);
+			this.machinegun.removeBullet(this);
 		}
 	}
 
@@ -45,7 +45,7 @@ class MachineGun {
 		this.bullets.push(new Bullet(this, _bulletType, _bulletX, _bulletY));
 	}
 
-	vanishBullet (_bullet) {
+	removeBullet (_bullet) {
 		const index = this.bullets.indexOf(_bullet);
 		this.bullets.splice(index, 1);
 	}

@@ -1,6 +1,5 @@
 class Enemy {
-	constructor (_company, _gameMaster, _type, _posY) {
-		this.gameMaster = _gameMaster;
+	constructor (_company, _type, _posY) {
 		this.company = _company;
 		this.type = _type;
 		this.healthBarColor = "#ff0000";
@@ -13,7 +12,7 @@ class Enemy {
 				this.speed = 1;
 				this.health = 5;
 				this.points = 500;
-				this.penalty = 200;
+				this.penalty = -200;
 				break;
 			case "small" :
 				this.size = 25;
@@ -21,7 +20,7 @@ class Enemy {
 				this.speed = 3;
 				this.health = 1;
 				this.points = 100;
-				this.penalty = 50;
+				this.penalty = -50;
 				break;
 		}
 
@@ -42,14 +41,12 @@ class Enemy {
 		this.healthBarWidth = (this.size / this.initialHealth) * this.health;
 
 		if (this.health <= 0){
-			this.gameMaster.increaseScore(this.points);
-			this.company.vanishEnemy(this);
+			this.company.removeEnemy(this, this.points);
 		}
 	}
 
 	kill () {
-		this.gameMaster.decreaseScore(this.penalty);
-		this.company.vanishEnemy(this);
+		this.company.removeEnemy(this, this.penalty);
 	}
 
 	update () {
@@ -81,15 +78,17 @@ class EnemyCompany {
 		this.enemies = [];
 	}
 
-	vanishEnemy (_enemy) {
+	removeEnemy (_enemy, _points) {
 		var enemyIndex = this.enemies.indexOf(_enemy);
+
 		this.enemies.splice(enemyIndex, 1);
+		this.gameMaster.updateScore(_points);
 	}
 
 	summonEnemy () {
 		const randomY = Math.floor(Math.random() * CANVAS.height);
 		const randomSize = Math.random() > 0.7 ? "big" : "small";
-		const newEnemy = new Enemy(this, this.gameMaster, randomSize, randomY);
+		const newEnemy = new Enemy(this, randomSize, randomY);
 
 		this.enemies.push(newEnemy);
 		this.lastEnemySpawnTime = this.gameMaster.date.getTime();
@@ -99,14 +98,14 @@ class EnemyCompany {
 		const currentTime = this.gameMaster.date.getTime();
 		const timePastSinceLastEnemyWasSummoned = currentTime - this.lastEnemySpawnTime;
 
-		this.gameMaster.getBullets().forEach((_bullet) => {
-			this.enemies.forEach((_enemy) => {
+		this.enemies.forEach((_enemy) => {
+			this.gameMaster.getBullets().forEach((_bullet) => {
 				const isBulletOnEnemyXAxis = (_bullet.posX + _bullet.size) > _enemy.posX && _bullet.posX < (_enemy.posX + _enemy.size);
 				const isBulletOnEnemyYAxis = (_bullet.posY + _bullet.size) > _enemy.posY && _bullet.posY < (_enemy.posY + _enemy.size);
 
 				if (isBulletOnEnemyXAxis && isBulletOnEnemyYAxis) {
 						_enemy.die();
-						this.gameMaster.vanishBullet(_bullet);
+						this.gameMaster.removeBullet(_bullet);
 				}
 			});
 		})

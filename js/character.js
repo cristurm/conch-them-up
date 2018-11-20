@@ -1,7 +1,5 @@
 class Character {
-	constructor (gameMaster) {
-		this.gameMaster = gameMaster;
-
+	constructor () {
 		this.posX = 50;
 		this.posY = CANVAS.height * 0.5;
 		this.size = 20;

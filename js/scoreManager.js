@@ -3,36 +3,28 @@ class ScoreManager {
     this.gameMaster = _gameMaster;
 
     this.score = 0;
-		this.scoreGoal = 1000;
+		this.goal = 1000;
 		this.scoreBarBGWidth = CANVAS.width - 20;
 		this.scoreBarWidth = this.score;
   }
 
   resetScore () {
     this.score = 0;
-    this.scoreGoal = 1000;
+    this.goal = 1000;
   }
 
-  scoreUp (_plusScore) {
-		this.score += _plusScore;
-		this.score = this.score > this.scoreGoal ? this.scoreGoal : this.score;
+  updateScore (_points) {
+    const newScore = this.score + _points;
+		this.score = newScore > this.goal ? this.goal : newScore;
 
-		this.scoreBarWidth = (this.scoreBarBGWidth / this.scoreGoal) * this.score;
-
-		this.updateScoreUI();
-	}
-
-  scoreDown (_minusScore) {
-		this.score -= _minusScore;
-
-		if (this.score < 0) {
+    if (this.score < 0) {
       this.gameMaster.endGame();
 		}
 
-		this.scoreBarWidth = (this.scoreBarBGWidth / this.scoreGoal) * this.score;
+		this.scoreBarWidth = (this.scoreBarBGWidth / this.goal) * this.score;
 
 		this.updateScoreUI();
-	}
+  }
 
   updateScoreUI () {
 		const label = "SCORE: " + this.score;
