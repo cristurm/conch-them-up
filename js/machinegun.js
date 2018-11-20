@@ -33,7 +33,7 @@ class MachineGun {
 		this.canShoot = true;
 	}
 
-	emptyMachinegun () {
+	emptyGun () {
 		this.bullets = [];
 	}
 

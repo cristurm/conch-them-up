@@ -4,8 +4,6 @@ class GameMaster {
 	constructor () {
 		var gameMaster = this;
 
-		this.counter = 0;
-		this.auxIndex = 0;
 		this.date = new Date();
 		this.currentTime = this.date.getTime();
 		this.pastTime = this.date.getTime();
@@ -17,7 +15,7 @@ class GameMaster {
 		this.prevEscKeyDown = KEYBOARD.isKeyDown("esc");
 
 		// game elements
-		this.enemies = [];
+		this.enemyCompany = new EnemyCompany(this);
 		this.mainChar = new Character(this);
 		this.machinegun = new MachineGun(this);
 
@@ -50,26 +48,13 @@ class GameMaster {
 		this.gameState = "gameOver";
 	}
 
-	summonEnemy () {
-		const randomY = Math.floor(Math.random() * CANVAS.height);
-		const randomSize = Math.random() > 0.7 ? "big" : "small";
-		const newEnemy = new Enemy(randomSize, randomY);
-
-		this.enemies.push(newEnemy);
-	}
-
-	vanishEnemy  (_enemy) {
-		var enemyIndex = this.enemies.indexOf(_enemy);
-		this.enemies.splice(enemyIndex, 1);
-	}
-
 	vanishSkill (_bullet) {
 		this.machinegun.vanishBullet(_bullet);
 	}
 
 	reset () {
-		this.enemies = [];
-		this.machinegun.emptyMachinegun();
+		this.enemyCompany.clearField();
+		this.machinegun.emptyGun();
 		this.mainChar.rebirth();
 		this.scoreManager.resetScore();
 	}
@@ -95,22 +80,13 @@ class GameMaster {
 			this.timerFlag = false;
 		} else {
 			if (this.summonDifference > 1000) {
-				this.summonEnemy();
+				this.enemyCompany.summonEnemy();
 
 				this.timerFlag = true;
 			}
 		}
 
-		// Update Enemies
-		this.auxIndex = 0;
-		for (this.auxIndex = 0; this.auxIndex < this.enemies.length; this.auxIndex += 1) {
-			if(this.enemies[this.auxIndex]) {
-				var enemy = this.enemies[this.auxIndex];
-
-				enemy.update();
-			}
-		}
-
+		this.enemyCompany.update();
 		this.machinegun.update(this.mainChar);
 	}
 
@@ -173,17 +149,8 @@ class GameMaster {
 		// Draw Background Pattern
 		CANVAS.gameDrawRectangle(this.bgPattern, 0, 0, CANVAS.width, CANVAS.height);
 
-		// Draw Main Character
 		this.mainChar.draw();
-
-		// Draw Enemies
-		this.auxIndex = 0;
-		for (this.auxIndex = 0; this.auxIndex < this.enemies.length; this.auxIndex += 1) {
-			if(this.enemies[this.auxIndex]) {
-				this.enemies[this.auxIndex].draw();
-			}
-		}
-
+		this.enemyCompany.draw();
 		this.machinegun.draw();
 	}
 

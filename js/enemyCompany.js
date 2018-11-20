@@ -42,13 +42,13 @@ class Enemy {
 
 		if (this.health <= 0){
 			GAMEMASTER.scoreManager.scoreUp(this.points);
-			GAMEMASTER.vanishEnemy(this);
+			GAMEMASTER.enemyCompany.vanishEnemy(this);
 		}
 	}
 
 	kill () {
 		GAMEMASTER.scoreManager.scoreDown(this.penalty);
-		GAMEMASTER.vanishEnemy(this);
+		GAMEMASTER.enemyCompany.vanishEnemy(this);
 	}
 
 	update () {
@@ -78,5 +78,36 @@ class Enemy {
 		CANVAS.gameDrawRectangle(this.color, this.posX, this.posY, this.size, this.size);
 		CANVAS.gameDrawRectangle(this.healthBarBCANVASolor, this.posX, this.base, this.size, 2);
 		CANVAS.gameDrawRectangle(this.healthBarColor, this.posX, this.base, this.healthBarWidth, 2);
+	}
+}
+
+class EnemyCompany {
+	constructor () {
+		this.enemies = [];
+	}
+
+	vanishEnemy (_enemy) {
+		var enemyIndex = this.enemies.indexOf(_enemy);
+		this.enemies.splice(enemyIndex, 1);
+	}
+
+	summonEnemy () {
+		const randomY = Math.floor(Math.random() * CANVAS.height);
+		const randomSize = Math.random() > 0.7 ? "big" : "small";
+		const newEnemy = new Enemy(randomSize, randomY);
+
+		this.enemies.push(newEnemy);
+	}
+
+	clearField () {
+		this.enemies = [];
+	}
+
+	update () {
+		this.enemies.forEach(_enemy => _enemy.update());
+	}
+
+	draw () {
+		this.enemies.forEach(_enemy => _enemy.draw());
 	}
 }
