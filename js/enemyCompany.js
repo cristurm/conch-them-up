@@ -1,5 +1,8 @@
 class Enemy {
-	constructor (_type, _posY) {
+	constructor (_company, _gameMaster, _type, _posY) {
+		this.gameMaster = _gameMaster;
+		this.company = _company;
+
 		this.type = _type;
 		this.auxIndex = 0;
 		this.healthBarColor = "#ff0000";
@@ -41,29 +44,29 @@ class Enemy {
 		this.healthBarWidth = (this.size / this.initialHealth) * this.health;
 
 		if (this.health <= 0){
-			GAMEMASTER.scoreManager.scoreUp(this.points);
-			GAMEMASTER.enemyCompany.vanishEnemy(this);
+			this.gameMaster.scoreManager.scoreUp(this.points);
+			this.company.vanishEnemy(this);
 		}
 	}
 
 	kill () {
-		GAMEMASTER.scoreManager.scoreDown(this.penalty);
-		GAMEMASTER.enemyCompany.vanishEnemy(this);
+		this.gameMaster.scoreManager.scoreDown(this.penalty);
+		this.company.vanishEnemy(this);
 	}
 
 	update () {
 		this.move();
 
 		this.auxIndex = 0;
-		for (this.auxIndex = 0; this.auxIndex < GAMEMASTER.machinegun.bullets.length; this.auxIndex += 1) {
-			if(GAMEMASTER.machinegun.bullets[this.auxIndex]) {
-				var bullet = GAMEMASTER.machinegun.bullets[this.auxIndex];
+		for (this.auxIndex = 0; this.auxIndex < this.gameMaster.machinegun.bullets.length; this.auxIndex += 1) {
+			if(this.gameMaster.machinegun.bullets[this.auxIndex]) {
+				var bullet = this.gameMaster.machinegun.bullets[this.auxIndex];
 
 				if (((bullet.posX + bullet.size) > this.posX && bullet.posX < (this.posX + this.size)) &&
 					((bullet.posY + bullet.size) > this.posY && bullet.posY < (this.posY + this.size))) {
 
 					this.die();
-					GAMEMASTER.vanishSkill(bullet);
+					this.gameMaster.vanishSkill(bullet);
 				}
 			}
 		}
@@ -82,7 +85,16 @@ class Enemy {
 }
 
 class EnemyCompany {
-	constructor () {
+	constructor (_gameMaster) {
+		this.gameMaster = _gameMaster;
+
+		this.enemies = [];
+		this.lastEnemySpawnTime = _gameMaster.date.getTime();
+		this.timerFlag = true;
+		this.enemiesDelay = 1000;
+	}
+
+	clearField () {
 		this.enemies = [];
 	}
 
@@ -94,16 +106,20 @@ class EnemyCompany {
 	summonEnemy () {
 		const randomY = Math.floor(Math.random() * CANVAS.height);
 		const randomSize = Math.random() > 0.7 ? "big" : "small";
-		const newEnemy = new Enemy(randomSize, randomY);
+		const newEnemy = new Enemy(this, this.gameMaster, andomSize, randomY);
 
 		this.enemies.push(newEnemy);
-	}
-
-	clearField () {
-		this.enemies = [];
+		this.lastEnemySpawnTime = this.gameMaster.date.getTime();
 	}
 
 	update () {
+		const currentTime = this.gameMaster.date.getTime();
+		const timePastSinceLastEnemyWasSummoned = currentTime - this.lastEnemySpawnTime;
+
+		if (timePastSinceLastEnemyWasSummoned > this.enemiesDelay) {
+			this.summonEnemy();
+		}
+
 		this.enemies.forEach(_enemy => _enemy.update());
 	}
 

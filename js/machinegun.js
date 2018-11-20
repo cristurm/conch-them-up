@@ -50,25 +50,20 @@ class MachineGun {
 	}
 
 	update (_character) {
-		this.bullets.forEach((_bullet) => {
-			_bullet.update();
-		})
+		// Bullet Delay
+		const currentTime = this.gameMaster.date.getTime();
+		const timePastSinceLastShot = currentTime - this.lastShotTime;
 
-		// Shoot!
-		if (this.canShoot) {
+		if (timePastSinceLastShot > this.bulletDelay) {
 			const bulletPosY = _character.posY + _character.charHeight * 0.5;
 			const	bulletPosX = _character.posX + _character.charWidth * 0.5;
 
 			this.shoot("thunder", bulletPosX, bulletPosY);
 		}
 
-		// Bullet Delay
-		this.currentTime = this.gameMaster.date.getTime();
-		const timeDelta = this.currentTime - this.lastShotTime;
-
-		if (timeDelta > this.bulletDelay) {
-			this.canShoot = true;
-		}
+		this.bullets.forEach((_bullet) => {
+			_bullet.update();
+		})
 	}
 
 	draw () {

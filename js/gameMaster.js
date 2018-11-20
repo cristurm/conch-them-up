@@ -5,10 +5,6 @@ class GameMaster {
 		var gameMaster = this;
 
 		this.date = new Date();
-		this.currentTime = this.date.getTime();
-		this.pastTime = this.date.getTime();
-		this.timerFlag = true;
-		this.summonDifference = 0;
 
 		// "initial" || "playing" || "paused" || "victory" || "gameOver"
 		this.gameState = "initial";
@@ -68,24 +64,9 @@ class GameMaster {
 	}
 
 	playingStateUpdate () {
-		this.mainChar.update();
-
-		// Summon Enemies Randomly
 		this.date = new Date();
-		this.currentTime = this.date.getTime();
-		this.summonDifference = this.currentTime - this.pastTime;
 
-		if (this.timerFlag) {
-			this.pastTime = this.date.getTime();
-			this.timerFlag = false;
-		} else {
-			if (this.summonDifference > 1000) {
-				this.enemyCompany.summonEnemy();
-
-				this.timerFlag = true;
-			}
-		}
-
+		this.mainChar.update();
 		this.enemyCompany.update();
 		this.machinegun.update(this.mainChar);
 	}
