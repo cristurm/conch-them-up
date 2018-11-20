@@ -1,35 +1,20 @@
-var GameEvents = function () {
-	return {
-		bindEvents: function () {
-			document.addEventListener('keydown', function(_event) {
-				_event.preventDefault();
-				KB.updatePressedKeys(_event.keyCode, true);
-			});
+const BindGameEvents = () => {
+	document.addEventListener('keydown', (_event) => {
+		_event.preventDefault();
+		KEYBOARD.updatePressedKeys(_event.keyCode, true);
+	});
 
-			document.addEventListener('keyup', function(_event) {
-				_event.preventDefault();
-				KB.updatePressedKeys(_event.keyCode, false);
-			});
+	document.addEventListener('keyup', (_event) => {
+		_event.preventDefault();
+		KEYBOARD.updatePressedKeys(_event.keyCode, false);
+	});
 
-			window.addEventListener("blur", function () {
-				// In case the player switches windows/tabs
-				KB.pressedKeys = {};
+	window.addEventListener("blur", () => {
+		// In case the player switches windows/tabs
+		KEYBOARD.pressedKeys = {};
 
-				if (GL.gameState == "playing") {
-					GL.gameState = "paused";
-				}
-			});
+		if (GAMEMASTER.gameState === "playing") {
+			GAMEMASTER.gameState = "paused";
 		}
-	}
+	});
 }
-
-var GC = new GameCanvas();
-var KB = new KeyboardManager();
-var GL = new GameLoop();
-var GE = new GameEvents();
-
-GC.init();
-KB.init();
-GL.init();
-
-GE.bindEvents();

@@ -1,7 +1,8 @@
-conch-them-up
+Conch Them Up
 =============
 
-Conch Them Up is like a shmup, but less hard-core. Made with HTML5 Canvas and JavaScript.
+Conch Them Up is a shmup, but less hard-core.
+Made with HTML5 Canvas and Vanilla JavaScript.
 
 Resources:
 ----------

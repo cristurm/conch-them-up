@@ -4,13 +4,11 @@ body {
 	margin: 0;
 	padding: 0;
 	background: #eee;
-}
-
-h1 {
-	text-align: center;
+	font-family: 'Helvetica', 'Trebuchet', 'Arial', sans-serif;
 }
 
 h1, h2 {
+	margin: 1.5em 0;
 	font-family: 'Press Start 2P', cursive;
 }
 
