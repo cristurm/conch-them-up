@@ -2,9 +2,7 @@ class Enemy {
 	constructor (_company, _gameMaster, _type, _posY) {
 		this.gameMaster = _gameMaster;
 		this.company = _company;
-
 		this.type = _type;
-		this.auxIndex = 0;
 		this.healthBarColor = "#ff0000";
 		this.healthBarBCANVASolor = "#ffffff";
 
@@ -57,17 +55,6 @@ class Enemy {
 	update () {
 		this.move();
 
-		this.auxIndex = 0;
-		this.gameMaster.machinegun.bullets.forEach((_bullet) => {
-			if (((_bullet.posX + _bullet.size) > this.posX && _bullet.posX < (this.posX + this.size)) &&
-				((_bullet.posY + _bullet.size) > this.posY && _bullet.posY < (this.posY + this.size))) {
-
-				this.die();
-				this.gameMaster.vanishBullet(_bullet);
-			}
-		});
-
-
 		if (this.posX < (-this.size)){
 			this.kill();
 		}
@@ -111,6 +98,18 @@ class EnemyCompany {
 	update () {
 		const currentTime = this.gameMaster.date.getTime();
 		const timePastSinceLastEnemyWasSummoned = currentTime - this.lastEnemySpawnTime;
+
+		this.gameMaster.getBullets().forEach((_bullet) => {
+			this.enemies.forEach((_enemy) => {
+				const isBulletOnEnemyXAxis = (_bullet.posX + _bullet.size) > _enemy.posX && _bullet.posX < (_enemy.posX + _enemy.size);
+				const isBulletOnEnemyYAxis = (_bullet.posY + _bullet.size) > _enemy.posY && _bullet.posY < (_enemy.posY + _enemy.size);
+
+				if (isBulletOnEnemyXAxis && isBulletOnEnemyYAxis) {
+						_enemy.die();
+						this.gameMaster.vanishBullet(_bullet);
+				}
+			});
+		})
 
 		if (timePastSinceLastEnemyWasSummoned > this.enemiesDelay) {
 			this.summonEnemy();

@@ -56,6 +56,10 @@ class GameMaster {
 		this.machinegun.vanishBullet(_bullet);
 	}
 
+	getBullets () {
+		return this.machinegun.bullets;
+	}
+
 	reset () {
 		this.enemyCompany.clearField();
 		this.machinegun.emptyGun();

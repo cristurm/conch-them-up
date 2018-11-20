@@ -1,7 +1,6 @@
 class Bullet {
 	constructor (_machinegun, _newType, _newX, _newY) {
 		this.machinegun = _machinegun;
-
 		this.type = _newType;
 		this.initPos = _newX;
 		this.posX = _newX;
