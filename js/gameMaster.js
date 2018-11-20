@@ -44,7 +44,15 @@ class GameMaster {
 		this.gameState = "gameOver";
 	}
 
-	vanishSkill (_bullet) {
+	increaseScore (_points) {
+		this.scoreManager.scoreUp(_points);
+	}
+
+	decreaseScore (_penalty) {
+		this.scoreManager.scoreDown(_penalty);
+	}
+
+	vanishBullet (_bullet) {
 		this.machinegun.vanishBullet(_bullet);
 	}
 

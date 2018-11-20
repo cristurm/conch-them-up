@@ -1,5 +1,7 @@
 class Bullet {
-	constructor (_newType, _newX, _newY) {
+	constructor (_machinegun, _newType, _newX, _newY) {
+		this.machinegun = _machinegun;
+
 		this.type = _newType;
 		this.initPos = _newX;
 		this.posX = _newX;
@@ -12,7 +14,7 @@ class Bullet {
 		this.posX += this.speed;
 
 		if (this.posX > CANVAS.width){
-			GAMEMASTER.vanishSkill(this);
+			this.machinegun.vanishBullet(this);
 		}
 	}
 
@@ -41,7 +43,7 @@ class MachineGun {
 		this.canShoot = false;
 		this.lastShotTime = this.gameMaster.date.getTime();
 
-		this.bullets.push(new Bullet(_bulletType, _bulletX, _bulletY));
+		this.bullets.push(new Bullet(this, _bulletType, _bulletX, _bulletY));
 	}
 
 	vanishBullet (_bullet) {

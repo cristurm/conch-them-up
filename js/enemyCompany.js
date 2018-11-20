@@ -44,13 +44,13 @@ class Enemy {
 		this.healthBarWidth = (this.size / this.initialHealth) * this.health;
 
 		if (this.health <= 0){
-			this.gameMaster.scoreManager.scoreUp(this.points);
+			this.gameMaster.increaseScore(this.points);
 			this.company.vanishEnemy(this);
 		}
 	}
 
 	kill () {
-		this.gameMaster.scoreManager.scoreDown(this.penalty);
+		this.gameMaster.decreaseScore(this.penalty);
 		this.company.vanishEnemy(this);
 	}
 
@@ -58,18 +58,14 @@ class Enemy {
 		this.move();
 
 		this.auxIndex = 0;
-		for (this.auxIndex = 0; this.auxIndex < this.gameMaster.machinegun.bullets.length; this.auxIndex += 1) {
-			if(this.gameMaster.machinegun.bullets[this.auxIndex]) {
-				var bullet = this.gameMaster.machinegun.bullets[this.auxIndex];
+		this.gameMaster.machinegun.bullets.forEach((_bullet) => {
+			if (((_bullet.posX + _bullet.size) > this.posX && _bullet.posX < (this.posX + this.size)) &&
+				((_bullet.posY + _bullet.size) > this.posY && _bullet.posY < (this.posY + this.size))) {
 
-				if (((bullet.posX + bullet.size) > this.posX && bullet.posX < (this.posX + this.size)) &&
-					((bullet.posY + bullet.size) > this.posY && bullet.posY < (this.posY + this.size))) {
-
-					this.die();
-					this.gameMaster.vanishSkill(bullet);
-				}
+				this.die();
+				this.gameMaster.vanishBullet(_bullet);
 			}
-		}
+		});
 
 
 		if (this.posX < (-this.size)){
@@ -106,7 +102,7 @@ class EnemyCompany {
 	summonEnemy () {
 		const randomY = Math.floor(Math.random() * CANVAS.height);
 		const randomSize = Math.random() > 0.7 ? "big" : "small";
-		const newEnemy = new Enemy(this, this.gameMaster, andomSize, randomY);
+		const newEnemy = new Enemy(this, this.gameMaster, randomSize, randomY);
 
 		this.enemies.push(newEnemy);
 		this.lastEnemySpawnTime = this.gameMaster.date.getTime();
